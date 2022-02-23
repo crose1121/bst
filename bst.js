@@ -6,57 +6,71 @@ class Node{
         this.left = null;
         this.right = null;
     }
+    findMax() {
+        return this.right?this.right.findMax():this.value;
+    }
+    findMin() {
+        return this.left?this.left.findMin():this.value;
+    }
+    insert(valueInput) {
+        //if we're in here the root is not null
+        if (valueInput<this.value) {
+            if (this.left) {
+                this.left.insert(valueInput)
+            }
+            else{this.left = new Node(valueInput);}
+        }
+
+        if (valueInput>this.value) {
+            if (this.right) {
+                this.right.insert(valueInput)
+            }
+            else{this.right = new Node(valueInput);}
+        }
+    }
 }
 
 class BST{
     constructor() {
         this.root = null;
     }
-    insert(value){
-        let newNode = new Node(value)
-        if (this.root===null) {
-            this.root = newNode;
-            return;
-        }
-        let runner = this.root;
-        while(true) {
-            if (newNode.value > runner.value ) {
-                if (runner.right===null) {
-                    runner.right = newNode;
-                    return;
-                }
-                else {
-                    runner = runner.right;
-                }
-            }
-            else {
-                if (runner.left===null) {
-                    runner.left = newNode;
-                    return;
-                }
-                else {
-                    runner = runner.left;
-                }
-            }
-        }
-    }
+
+    insert(value) {this.root?this.root.insert(value):this.root = new Node(value);}
+
+
     display(currentNode=this.root) {
-        console.log("node:", currentNode.value);
-
-        if (currentNode.left != null) {
-            this.display(currentNode.left)
+        if (currentNode!=null) {
+            console.log("node:", currentNode.value);
+    
+            if (currentNode.left != null) {
+                this.display(currentNode.left)
+            }
+    
+            if(currentNode.right != null) {
+                this.display(currentNode.right)
+            }
         }
+        return null;
+    }
 
-        if(currentNode.right != null) {
-            this.display(currentNode.right)
-        }
+    findMax() {
+        return this.root?this.root.findMax():null;
     }
 }
 
 let bst = new BST();
-bst.insert(3)
-bst.insert(5)
-bst.insert(4)
-bst.insert(2)
-bst.insert(1)
+bst.insert(2);
+bst.insert(3);
+bst.insert(5);
+
+bst.insert(1);
+
+bst.insert(7);
+
+bst.insert(4);
+
+bst.insert(78);
+
+
+console.log(bst.findMax());
 bst.display();
